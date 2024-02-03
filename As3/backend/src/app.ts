@@ -79,6 +79,19 @@ app.post("/loginTeacher", async (req: Request, res: Response) => {
   }
 });
 
+app.post("/loginStudent", async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    console.log(email, password);
+    const query = `SELECT * FROM students WHERE email='${email}' AND student_id='${password}';`;
+    const result1:any = await (await connection).query(query);
+    if (result1[0].length > 0) {
+      console.log(result1[0][0]);
+      res.json(result1[0][0]);
+    } else {
+        res.json("fail");
+    }
+  });
+
 const APP_PORT = 3000;
 
 app.listen(APP_PORT, () => {

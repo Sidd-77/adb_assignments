@@ -4,22 +4,22 @@ import axios from "axios";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
 import { UserContext } from "../Context";
 
-export default function LoginTeacher() {
+export default function LoginStudents() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const navigate = useNavigate();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const {user, setUser} = useContext(UserContext);
+  const {userStudent, setUserStudent} = useContext(UserContext);
 
-  
+
 
 
   const handleLogin = async () => {
-    const response = await axios.post('http://localhost:3000/loginTeacher', {email, password});
+    const response = await axios.post('http://localhost:3000/loginStudent', {email, password});
     if (response.data !== 'fail') {
       console.log('success request');
-      setUser(response.data);
-      navigate('/teacher');
+      setUserStudent(response.data);
+      navigate('/student');
     }else {
       console.log('failed request');
       navigate('/login');

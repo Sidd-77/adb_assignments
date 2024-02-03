@@ -1,6 +1,7 @@
 import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import LoginTeacher from "./teachers/LoginTeacher";
+import LoginStudents from "./students/LoginStudent";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Login = () => {
         <CardHeader>Students</CardHeader>
         <Divider />
         <CardBody>
-          <Button>Log in</Button>
+          <LoginStudents />
         </CardBody>
       </Card>
     </div>
