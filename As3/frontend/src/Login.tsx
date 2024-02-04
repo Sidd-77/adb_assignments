@@ -2,6 +2,7 @@ import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import LoginTeacher from "./teachers/LoginTeacher";
 import LoginStudents from "./students/LoginStudent";
+import LoginAdmin from "./admin/LoginAdmin";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,15 +13,7 @@ const Login = () => {
         <CardHeader className="">Admin</CardHeader>
         <Divider />
         <CardBody>
-          <Button
-            variant="flat"
-            color="secondary"
-            onClick={() => {
-              navigate("/admin");
-            }}
-          >
-            Log in
-          </Button>
+          <LoginAdmin />
         </CardBody>
       </Card>
       <Card className="flex-grow">

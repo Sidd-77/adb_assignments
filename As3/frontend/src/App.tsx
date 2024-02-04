@@ -12,14 +12,15 @@ import StudentPage from "./StudentPage";
 function App() {
   const { user, setUser } = useContext(UserContext);
   const { userStudent, setUserStudent } = useContext(UserContext);
+  const { admin, setAdmin } = useContext(UserContext);
 
   return (
     <div>
-      <Navbar className="flex  justify-between w-full">
+      <Navbar className="flex mx-0" maxWidth="full">
         <NavbarBrand>
           <p className="font-bold text-3xl">Student Database Management</p>
         </NavbarBrand>
-
+        
         {user.teacher_name ? (
           <>
             {user.teacher_name ? <p>{user.teacher_name}</p> : <></>}
@@ -59,6 +60,29 @@ function App() {
         ) : (
           <></>
         )}
+
+        {
+          admin.name ? (
+            <>
+              {admin.name ? <p>{admin.name}</p> : <></>}
+              <Avatar showFallback src="https://images.unsplash.com/broken" />
+              <Button
+                as={Link}
+                color="primary"
+                href="/"
+                variant="flat"
+                onClick={() => {
+                  setAdmin({});
+                }}
+              >
+                Log Out
+              </Button>
+            </>
+          ) : (
+            <></>
+          )
+        }
+        
       </Navbar>
 
       <Routes>
