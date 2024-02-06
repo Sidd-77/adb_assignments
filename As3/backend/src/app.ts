@@ -19,7 +19,7 @@ app.get("/students", async (req: Request, res: Response) => {
 });
 
 app.get("/teachers", async (req: Request, res: Response) => {
-  const result1 = await (await connection).query("SELECT * FROM teachers");
+  const result1 = await (await connection).query("SELECT courses.course_name, courses.teacher_id, teachers.teacher_name, teachers.teacher_id, teachers.email FROM teachers left join courses on teachers.teacher_id = courses.teacher_id");
   res.json(result1[0]);
 });
 
@@ -32,17 +32,23 @@ app.post("/addStudent", async (req: Request, res: Response) => {
 });
 
 app.post("/addTeacher", async (req: Request, res: Response) => {
-  const { name, email, subject } = req.body;
-  const query = `INSERT INTO teachers (teacher_name, email, subject) VALUES ('${name}', '${email}', '${subject}');`;
+  const { name, email } = req.body;
+  const query = `INSERT INTO teachers (teacher_name, email) VALUES ('${name}', '${email}');`;
   const result1 = await (await connection).query(query);
   res.json(result1);
 });
 
 app.post("/deleteTeacher", async (req: Request, res: Response) => {
-  const { teacher_id } = req.body;
-  const query = `DELETE FROM teachers WHERE teacher_id='${teacher_id}';`;
-  const result1 = await (await connection).query(query);
-  res.json(result1);
+  try {
+    const { teacher_id } = req.body;
+    const query = `DELETE FROM teachers WHERE teacher_id='${teacher_id}';`;
+    const result1 = await (await connection).query(query);
+    res.json(result1);
+  } catch (error:any) {
+    console.log(error.message);
+    res.status(300).json(error.message)
+  }
+  
 });
 
 app.post("/updateTeacher", async (req: Request, res: Response) => {
@@ -91,6 +97,36 @@ app.post("/loginStudent", async (req: Request, res: Response) => {
         res.json("fail");
     }
   });
+
+
+app.post('/addCourse', async (req: Request, res: Response) => {
+    const { course_name, teacher_id } = req.body;
+    const query = `INSERT INTO courses (course_name, teacher_id) VALUES ('${course_name}', '${teacher_id}');`;
+    const result1 = await (await connection).query(query);
+    res.json(result1);
+});
+
+
+app.get('/courses', async (req: Request, res: Response) => {
+
+    const result1 = await (await connection).query(`SELECT courses.course_id, courses.course_name, courses.teacher_id, teachers.teacher_name FROM courses inner join teachers on teachers.teacher_id = courses.teacher_id ;`);
+    res.json(result1[0]);
+    
+});
+
+app.post('/deleteCourse', async (req: Request, res: Response) => {
+    const { course_id } = req.body;
+    const query = `DELETE FROM courses WHERE course_id='${course_id}';`;
+    const result1 = await (await connection).query(query);
+    res.json(result1);
+});
+
+app.post('/updateCourse', async (req: Request, res: Response) => {
+    const { course_name, teacher_id, course_id } = req.body;
+    const query = `UPDATE courses SET course_name='${course_name}', teacher_id='${teacher_id}' WHERE course_id='${course_id}';`;
+    const result1 = await (await connection).query(query);
+    res.json(result1);
+});
 
 const APP_PORT = 3000;
 

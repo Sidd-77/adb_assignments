@@ -11,7 +11,7 @@ const AddTeacher = () => {
     const [subject, setSubject] = useState('');
 
     const handleSubmit = async () => {
-        const response = await axios.post('http://localhost:3000/addTeacher', {name, email, subject});
+        const response = await axios.post('http://localhost:3000/addTeacher', {name, email});
         window.location.reload();
     }
 
@@ -36,12 +36,6 @@ const AddTeacher = () => {
                   variant="bordered"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                />
-                <Input
-                  label="subject"
-                  variant="bordered"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
                 />
                 </ModalBody>
                 <ModalFooter>

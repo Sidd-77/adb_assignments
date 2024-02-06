@@ -19,16 +19,27 @@ const TeacherTable = () => {
   const fetchteachers = async () => {
     setLoading(true);
     const response = await axios.get("http://localhost:3000/teachers");
+    console.log(response.data);
     setTeachers(response.data);
     setLoading(false);
   };
 
   const handleDelete = async (id: number) => {
-    const response = await axios.post("http://localhost:3000/deleteTeacher", {
-      teacher_id: id,
-    });
+    try {
+      const response = await axios.post("http://localhost:3000/deleteTeacher", {
+        teacher_id: id,
+      });
+      if(response.status===200){
+        alert(`Teacher with id ${id} deleted successfully`);
+      }
+    } catch (error: any) {
+      if(error.response.status===300){
+        alert(`Teacher with id ${id} is associated with a course and cannot be deleted`);
+      }
+    }
+
     setFetchAgain(!fetchAgain);
-  }
+  };
 
   useEffect(() => {
     fetchteachers();
@@ -51,13 +62,23 @@ const TeacherTable = () => {
               <TableRow key={teacher.teacher_id}>
                 <TableCell>{teacher.teacher_id}</TableCell>
                 <TableCell>{teacher.teacher_name}</TableCell>
-                <TableCell>{teacher.subject}</TableCell>
+                <TableCell>{teacher.course_name || "Not assigned"}</TableCell>
                 <TableCell>{teacher.email}</TableCell>
-                <TableCell><UpdateModal teacher={teacher} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
-                    </TableCell>
-                <TableCell><Button color='danger' onClick={()=> handleDelete(teacher.teacher_id)}>
+                <TableCell>
+                  <UpdateModal
+                    teacher={teacher}
+                    fetchAgain={fetchAgain}
+                    setFetchAgain={setFetchAgain}
+                  />
+                </TableCell>
+                <TableCell>
+                  <Button
+                    color="danger"
+                    onClick={() => handleDelete(teacher.teacher_id)}
+                  >
                     Delete
-                    </Button></TableCell>
+                  </Button>
+                </TableCell>
               </TableRow>
             );
           })}
