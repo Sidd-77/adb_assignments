@@ -7,6 +7,7 @@ import TeacherPage from "./Teacher/TeacherPage";
 import StudentPage from "./Student/StudentPage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import TestPage from "./Student/TestPage";
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/" element={<Login />} />
         <Route path="/teacher" element={<TeacherPage />} />
         <Route path="/student" element={<StudentPage />} />
+        <Route path="/test/:id" element={<TestPage />} />
       </Routes>
     </div>
   );

@@ -11,6 +11,7 @@ import AddQuestion from "./AddQuestion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CreateTest from "./CreateTest";
+import ReportModal from "./ReportModal";
 
 const TeacherPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -47,7 +48,7 @@ const TeacherPage = () => {
         <CardBody className="flex flex-row gap-2">
           <CreateTest />
           <AddQuestion />
-          <Button color='primary' className="flex-grow">Test Report</Button>
+          <ReportModal />
           <Button color='primary' className="flex-grow" onClick={()=>{
             setShowquestion(!showquestion);
             getQuestions();

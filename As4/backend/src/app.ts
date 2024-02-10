@@ -99,6 +99,17 @@ app.get('/getQuestions', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/getQuestion/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const query = `SELECT * FROM questionbank WHERE id=${id};`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
 app.post('/deleteQuestion', async (req: Request, res: Response) => {
   const { id } = req.body;
   try {
@@ -125,6 +136,46 @@ app.get('/getTests', async (req: Request, res: Response) => {
   try {
     const query = `SELECT * FROM test;`;
     const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.get('/getTest/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const query = `SELECT * FROM test WHERE id=${id};`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  }
+  catch (error:any) {
+    res.send("errpr")
+  }
+});
+
+app.post('/submitTest', async (req: Request, res: Response) => {
+  const { student_id, test_id, score } = req.body;
+  try {
+    const query = `INSERT INTO testresult (student_id, test_id, score) VALUES ('${student_id}', '${test_id}', '${score}');`;
+    const result1:any = await (await connection).query(query);
+    console.log(result1[0]);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.get('/getTestResults', async (req: Request, res: Response) => {
+  
+  try {
+    const query = `SELECT student.id, student.name as student_name, student.email, testresult.score, testresult.test_id, test.name as test_name
+    FROM student
+    JOIN testresult ON student.id = testresult.student_id
+    JOIN test ON testresult.test_id = test.id;`;
+    const result1:any = await (await connection).query(query);
+    console.log(result1[0]);
     res.json(result1[0]);
   } catch (error:any) {
     res.status(300).json(error.message)
