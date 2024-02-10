@@ -24,11 +24,11 @@ export default function App() {
   useEffect(() => {
     localStorage.getItem('Uteacher') && setUteacher(JSON.parse(localStorage.getItem('Uteacher')||'{}'));
     localStorage.getItem('Ustudent') && setUstudent(JSON.parse(localStorage.getItem('Ustudent')||'{}'));  
-  },[Ustudent, Uteacher])
+  },[])
 
   return (
     <div>
-      <Navbar maxWidth="full" className=" bg-teal-100">
+      <Navbar maxWidth="full" >
         <NavbarBrand className=" text-3xl font-bold mb-2">Assignment 4</NavbarBrand>
         
 

@@ -2,6 +2,11 @@ import express, { Request, Response } from 'express';
 import cors from "cors";
 import mysql from "mysql2/promise";
 const app = express();
+import('body-parser');
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
+
 
 const connection = mysql.createConnection({
   host: "127.0.0.1",
@@ -72,6 +77,59 @@ app.post('/student/register', async (req: Request, res: Response) => {
 });
 
 
+app.post('/addQuestion', async (req: Request, res: Response) => {
+  const { question, options, answer, image } = req.body;
+  console.log(question, options, answer, image);
+  try {
+    const query = `INSERT INTO questionbank (question, options, answer, image) VALUES ('${question}',  '${JSON.stringify(options)}', '${answer}', '${image || null}');`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.get('/getQuestions', async (req: Request, res: Response) => {
+  try {
+    const query = `SELECT * FROM questionbank;`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.post('/deleteQuestion', async (req: Request, res: Response) => {
+  const { id } = req.body;
+  try {
+    const query = `DELETE FROM questionbank WHERE id=${id};`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.post('/createTest', async (req: Request, res: Response) => {
+  const { name, questions, duration } = req.body;
+  try {
+    const query = `INSERT INTO test (name, questions, duration) VALUES ('${name}', '${JSON.stringify(questions)}', '${duration}');`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
+
+app.get('/getTests', async (req: Request, res: Response) => {
+  try {
+    const query = `SELECT * FROM test;`;
+    const result1:any = await (await connection).query(query);
+    res.json(result1[0]);
+  } catch (error:any) {
+    res.status(300).json(error.message)
+  }
+});
 
 const port = 3000;
 
