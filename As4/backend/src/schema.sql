@@ -17,7 +17,7 @@ CREATE TABLE QuestionBank (
 CREATE TABLE Teacher (
     id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -27,7 +27,7 @@ CREATE TABLE Teacher (
 CREATE TABLE Student (
     id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
