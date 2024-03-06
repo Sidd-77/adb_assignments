@@ -108,10 +108,8 @@ app.post('/addCourse', async (req: Request, res: Response) => {
 
 
 app.get('/courses', async (req: Request, res: Response) => {
-
     const result1 = await (await connection).query(`SELECT courses.course_id, courses.course_name, courses.teacher_id, teachers.teacher_name FROM courses inner join teachers on teachers.teacher_id = courses.teacher_id ;`);
     res.json(result1[0]);
-    
 });
 
 app.post('/deleteCourse', async (req: Request, res: Response) => {
