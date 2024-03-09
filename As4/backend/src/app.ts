@@ -157,6 +157,7 @@ app.get('/getTest/:id', async (req: Request, res: Response) => {
 
 app.post('/submitTest', async (req: Request, res: Response) => {
   const { student_id, test_id, score } = req.body;
+  console.log(req.body)
   try {
     const query = `INSERT INTO testresult (student_id, test_id, score) VALUES ('${student_id}', '${test_id}', '${score}');`;
     const result1:any = await (await connection).query(query);

@@ -38,6 +38,7 @@ CREATE TABLE Test (
     id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     questions JSON,
+    duration INT NOT NULL,
     PRIMARY KEY (id)
 );
 
