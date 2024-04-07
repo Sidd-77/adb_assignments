@@ -1,0 +1,10 @@
+LOAD CSV WITH HEADERS FROM 'file:///papers.csv' AS row
+CREATE (p:Paper {id: row.paper_id, filename: row.filename, authors: split(row.authors, ";")})
+
+LOAD CSV WITH HEADERS FROM 'file:///citations.csv' AS row
+MATCH (source:Paper {id: row.source}), (target:Paper {id: row.target})
+CREATE (source)-[:CITES]->(target)
+
+LOAD CSV WITH HEADERS FROM 'file:///citations_subset.csv' AS row
+MATCH (source:Paper {id: row.source}), (target:Paper {id: row.target})
+CREATE (source)-[:CITES]->(target)
