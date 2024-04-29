@@ -9,3 +9,5 @@ INSERT INTO temperature_data (weatherstationid, timestamp, temperature) VALUES (
 INSERT INTO temperature_data (weatherstationid, timestamp, temperature) VALUES ( uuid(), toTimestamp(now()), 33,98);
 INSERT INTO temperature_data (weatherstationid, timestamp, temperature) VALUES ( uuid(), toTimestamp(now()), 23.90);
 INSERT INTO temperature_data (weatherstationid, timestamp, temperature) VALUES ( uuid(), toTimestamp(now()), 31.81);
+
+-- select * from weather.temperature_data;
